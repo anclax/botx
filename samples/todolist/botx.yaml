@@ -1,0 +1,353 @@
+package: main
+
+i18n:
+  default: en
+  content:
+    nav:
+      back:
+        zh-hans: "⬅️ 返回"
+        en: "⬅️ Back"
+        es: "⬅️ Atras"
+      home:
+        zh-hans: "🏠 主页"
+        en: "🏠 Home"
+        es: "🏠 Inicio"
+      i18n:
+        zh-hans: "🌐 语言"
+        en: "🌐 Language"
+        es: "🌐 Idioma"
+    todo:
+      empty:
+        zh-hans: "暂无待办事项，添加一个吧。✨"
+        en: "No todos yet. Add one below. ✨"
+        es: "No hay tareas aun. Agrega una abajo. ✨"
+      select:
+        zh-hans: "选择一个待办查看详情。👇"
+        en: "Select a todo to view details. 👇"
+        es: "Selecciona una tarea para ver detalles. 👇"
+      prev:
+        zh-hans: "⬅️ 上一页"
+        en: "⬅️ Prev"
+        es: "⬅️ Anterior"
+      next:
+        zh-hans: "下一页 ➡️"
+        en: "Next ➡️"
+        es: "Siguiente ➡️"
+      add_button:
+        zh-hans: "➕ 添加待办"
+        en: "➕ Add Todo"
+        es: "➕ Agregar tarea"
+      add:
+        title_label:
+          zh-hans: "标题"
+          en: "Title"
+          es: "Titulo"
+        title_tip:
+          zh-hans: "请输入简短的待办标题。"
+          en: "Enter a short todo title."
+          es: "Ingresa un titulo corto."
+        success:
+          zh-hans: "待办已添加。使用按钮返回。✅"
+          en: "Todo added. Use the buttons to go back. ✅"
+          es: "Tarea agregada. Usa los botones para volver. ✅"
+        fail:
+          zh-hans: "添加待办失败: %s ❌"
+          en: "Failed to add todo: %s ❌"
+          es: "No se pudo agregar la tarea: %s ❌"
+      detail:
+        title_prefix:
+          zh-hans: "标题: "
+          en: "Title: "
+          es: "Titulo: "
+        status_prefix:
+          zh-hans: "状态: "
+          en: "Status: "
+          es: "Estado: "
+        status_done:
+          zh-hans: "已完成 ✅"
+          en: "done ✅"
+          es: "completada ✅"
+        status_open:
+          zh-hans: "未完成 ⏳"
+          en: "open ⏳"
+          es: "pendiente ⏳"
+        toggle_button:
+          zh-hans: "✅ 切换完成状态"
+          en: "✅ Toggle Done"
+          es: "✅ Alternar estado"
+        delete_button:
+          zh-hans: "🗑️ 删除"
+          en: "🗑️ Delete"
+          es: "🗑️ Eliminar"
+        back_list:
+          zh-hans: "📋 返回列表"
+          en: "📋 Back to List"
+          es: "📋 Volver a la lista"
+      toggle:
+        done:
+          zh-hans: "待办标记为已完成。✅"
+          en: "Todo marked done. ✅"
+          es: "Tarea marcada como completada. ✅"
+        open:
+          zh-hans: "待办标记为未完成。⏳"
+          en: "Todo marked open. ⏳"
+          es: "Tarea marcada como pendiente. ⏳"
+        fail:
+          zh-hans: "更新待办失败: %s ❌"
+          en: "Failed to update todo: %s ❌"
+          es: "No se pudo actualizar la tarea: %s ❌"
+        back_todo:
+          zh-hans: "📝 返回待办"
+          en: "📝 Back to Todo"
+          es: "📝 Volver a la tarea"
+      delete:
+        success:
+          zh-hans: "待办已删除。🧹"
+          en: "Todo deleted. 🧹"
+          es: "Tarea eliminada. 🧹"
+        fail:
+          zh-hans: "删除待办失败: %s ❌"
+          en: "Failed to delete todo: %s ❌"
+          es: "No se pudo eliminar la tarea: %s ❌"
+    i18n:
+      title:
+        zh-hans: "请选择语言"
+        en: "Choose a language"
+        es: "Elige un idioma"
+      zh:
+        zh-hans: "中文"
+        en: "中文"
+        es: "中文"
+      en:
+        zh-hans: "English"
+        en: "English"
+        es: "English"
+      es:
+        zh-hans: "espanol"
+        en: "espanol"
+        es: "espanol"
+
+navbar:
+  rows:
+    - columns:
+        - label: ${content.nav.back}
+          onClick: route:back
+        - label: ${content.nav.home}
+          onClick: route:/
+
+handlers:
+  - match: /start
+    matchType: exact
+    type: command
+    action: router.push(ctx, "/")
+
+pages:
+  /:
+    parameters:
+      - name: column
+        in: query
+        schema:
+          type: integer
+          default: 2
+      - name: row
+        in: query
+        schema:
+          type: integer
+          default: 5
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+    state:
+      type: object
+      required: []
+      properties:
+        items:
+          type: array
+          items:
+            schema: "#components/schemas/Todo"
+        total:
+          type: integer
+    view:
+      parseMode: HTML
+      message: |
+        ${cond(len(state) == 0, content.todo.empty, "")}
+        ${forEach(
+            state,
+            func (index int, item Todo) string {
+              return fmt.Sprintf(
+                "%d. %s<code>%s</code>\n",
+                index + 1,
+                cond(item.done, "[x] ", "[ ] "),
+                item.title,
+              )
+            }),
+        }
+        ${cond(len(state) == 0, "", content.todo.select)}
+      buttons:
+        grids:
+          - pagination:
+              columns: parameters.column
+              rows: parameters.row
+              total: state.total
+              page: parameters.page
+              items: state.items
+              item:
+                label: ${cond(item.done, "[x] " + item.title, "[ ] " + item.title)}
+                onClick: route:/todo/${item.ID}
+              prevLabel: ${content.todo.prev}
+              nextLabel: ${content.todo.next}
+          - rows:
+              - columns:
+                  - label: ${content.todo.add_button}
+                    onClick: route:/todo/add
+                  - label: ${content.nav.i18n}
+                    onClick: route:/i18n
+
+  /i18n:
+    view:
+      message: ${content.i18n.title}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: ${content.i18n.zh}
+                  onClick: lang:zh-hans
+                - label: ${content.i18n.en}
+                  onClick: lang:en
+                - label: ${content.i18n.es}
+                  onClick: lang:es
+
+  /todo/add:
+    form:
+      required: [title]
+      fields:
+        title:
+          label: ${content.todo.add.title_label}
+          input:
+            schema:
+              type: string
+            tip: ${content.todo.add.title_tip}
+    state:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+    view:
+      message: |
+        ${cond(
+            state.success,
+            content.todo.add.success,
+            fmt.Sprintf(content.todo.add.fail, state.error),
+        )}
+
+  /todo/{ID}:
+    parameters:
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    state:
+      schema: "#components/schemas/Todo"
+    view:
+      parseMode: HTML
+      message: |
+        ${content.todo.detail.title_prefix}<code>${state.title}</code>
+        ${content.todo.detail.status_prefix}${cond(state.done, content.todo.detail.status_done, content.todo.detail.status_open)}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: ${content.todo.detail.toggle_button}
+                  onClick: route:/todo/${parameters.ID}/toggle
+                - label: ${content.todo.detail.delete_button}
+                  onClick: route:/todo/${parameters.ID}/delete
+                - label: ${content.todo.detail.back_list}
+                  onClick: route:/
+
+  /todo/{ID}/toggle:
+    parameters:
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    state:
+      type: object
+      required: [success, error, done]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+        done:
+          type: boolean
+    view:
+      message: |
+        ${cond(
+            state.success,
+            cond(state.done, content.todo.toggle.done, content.todo.toggle.open),
+            fmt.Sprintf(content.todo.toggle.fail, state.error),
+        )}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: ${content.todo.toggle.back_todo}
+                  onClick: route:/todo/${parameters.ID}
+                - label: ${content.todo.detail.back_list}
+                  onClick: route:/
+
+  /todo/{ID}/delete:
+    parameters:
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    state:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+    view:
+      message: |
+        ${cond(
+            state.success,
+            content.todo.delete.success,
+            fmt.Sprintf(content.todo.delete.fail, state.error),
+        )}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: ${content.todo.detail.back_list}
+                  onClick: route:/
+
+components:
+  schemas:
+    Todo:
+      type: object
+      required: [ID, title, done]
+      properties:
+        ID:
+          type: integer
+          format: int64
+        title:
+          type: string
+        done:
+          type: boolean

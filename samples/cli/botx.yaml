@@ -1,0 +1,253 @@
+package: common
+navbar:
+  rows:
+    - columns:
+        - label: 返回
+          onClick: route:back
+        - label: 返回主页
+          onClick: route:/
+
+handlers:
+  - match: /start
+    matchType: exact
+    type: command
+    action: router.push(ctx, "/")
+
+pages:
+  /:
+    view:
+      message: "欢迎使用地址管理机器人！请选择下方按钮进行操作。"
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: 管理地址
+                  onClick: route:/address
+  /error:
+    view:
+      message: "错误信息: ${err}"
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: 返回上一页
+                  onClick: route:back
+                - label: 返回主页
+                  onClick: route:/
+  /address:
+    parameters:
+      - name: column
+        in: query
+        schema:
+          type: integer
+          default: 2
+      - name: row
+        in: query
+        schema:
+          type: integer
+          default: 5
+      - name: page
+        in: query
+        schema:
+          type: integer
+          default: 0
+    state:
+      schema:
+        type: object
+        required: []
+        properties:
+          items:
+            type: array
+            items:
+              schema: "#components/schemas/Address"
+          total:
+            type: integer
+    view:
+      parseMode: HTML
+      message: |
+        ${cond(len(state) == 0, "暂无地址，请添加地址", "")}
+        ${forEach(
+            state,
+            func (index int, item Address) string {
+              return fmt.Sprintf(
+                "%d. %s<code>%s</code>\n",
+                index + 1,
+                cond(item.name == "", "", item.name + " "),
+                item.address,
+              )
+            }),
+        }
+        ${cond(len(state) == 0, "", "请点击序号对应的按钮对地址进行操作")}
+      buttons:
+        grids:
+          - pagination:
+              columns: parameters.column
+              rows: parameters.row
+              total: state.total
+              page: parameters.page
+              items: state.items
+              item:
+                label: ${cond(item.name == "", item.address, item.name)}
+                onClick: route:/address/${item.ID}
+              prevLabel: "上一页"
+              nextLabel: "下一页"
+          - rows:
+              - columns:
+                  - label: "添加新地址"
+                    onClick: route:/address/add
+  /address/add:
+    form:
+      required: [address]
+      fields:
+        address:
+          label: 地址
+          input:
+            schema:
+              type: string
+            tip: |
+              请输入地址，如果需要备注请用空格分隔。例如:
+              Txxxxxxxx
+              Txxxxxxxx 备注
+          validator: validateAddressOrName
+    state:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+    view:
+      message: |
+        ${cond(
+            state.success,
+            "地址添加成功！点击下方按钮返回地址列表",
+            fmt.Sprintf("地址添加失败: %s", state.error),
+        )}
+
+  /address/{ID}:
+    parameters:
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    state:
+      schema: "#components/schemas/Address"
+    view:
+      parseMode: HTML
+      message: |
+        地址: ${state.address}
+        备注: ${state.name}
+
+        请点击下列按钮进行操作
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: "返回主页"
+                  onClick: route:/
+                - label: "删除地址"
+                  onClick: route:/address/${parameters.ID}/delete
+                - label: "编辑备注"
+                  onClick: route:/address/${parameters.ID}/edit?field=name
+                - label: "编辑地址"
+                  onClick: route:/address/${parameters.ID}/edit?field=address
+
+  /address/{ID}/delete:
+    parameters:
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    state:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+    view:
+      message: |
+        ${cond(
+            state.success,
+            "地址删除成功！点击下方按钮返回地址列表",
+            fmt.Sprintf("地址删除失败: %s", state.error),
+        )}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: "返回地址列表"
+                  onClick: route:/address
+                - label: "返回地址详情"
+                  onClick: route:/address/${parameters.ID}
+
+  /address/{ID}/edit:
+    parameters:
+      query:
+        - name: field
+          in: query
+          schema:
+            type: string
+          required: true
+      path:
+        - name: ID
+          in: path
+          schema:
+            type: integer
+            format: int64
+          required: true
+    form:
+      required: [value]
+      fields:
+        value:
+          label: 内容
+          input: text
+          type: string
+          tip: ${cond(parameters.field == "name", "请输入新的备注名称", "请输入新的地址")}
+    state:
+      type: object
+      required: [success, error]
+      properties:
+        success:
+          type: boolean
+        error:
+          type: string
+    view:
+      message: |
+        ${cond(
+            state.success,
+            "地址修改成功！点击下方按钮返回地址详情",
+            fmt.Sprintf("地址修改失败: %s", state.error),
+        )}
+      buttons:
+        grid:
+          rows:
+            - columns:
+                - label: "返回地址详情"
+                  onClick: route:/address/${parameters.ID}
+                - label: "返回地址列表"
+                  onClick: route:/address
+                - label: "重新编辑"
+                  onClick: route:/address/${parameters.ID}/edit?field=${parameters.field}
+
+components:
+  schemas:
+    Address:
+      type: object
+      required: [ID, address, name]
+      properties:
+        ID:
+          type: integer
+          format: int64
+        address:
+          type: string
+        name:
+          type: string
