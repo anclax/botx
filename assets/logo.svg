@@ -1,38 +1,40 @@
 <svg width="640" height="200" viewBox="0 0 640 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <!-- Icon -->
-  <g transform="translate(40,30)">
-    <!-- main block -->
-    <rect x="0" y="0" width="140" height="140" rx="28" fill="#0B1220"/>
-    <!-- inner "B" made of components -->
-    <rect x="34" y="32" width="36" height="76" rx="10" fill="#FFFFFF"/>
-    <rect x="70" y="32" width="44" height="34" rx="12" fill="#FFFFFF"/>
-    <rect x="70" y="74" width="44" height="34" rx="12" fill="#FFFFFF"/>
+  <g transform="translate(80,0)">
+    <!-- Icon -->
+    <g transform="translate(40,30)">
+      <!-- main block -->
+      <rect x="0" y="0" width="140" height="140" rx="28" fill="#0B1220"/>
+      <!-- inner "B" made of components -->
+      <rect x="34" y="32" width="36" height="76" rx="10" fill="#FFFFFF"/>
+      <rect x="70" y="32" width="44" height="34" rx="12" fill="#FFFFFF"/>
+      <rect x="70" y="74" width="44" height="34" rx="12" fill="#FFFFFF"/>
 
-    <!-- route connectors (nodes + edges) -->
-    <circle cx="124" cy="28" r="7" fill="#22C55E"/>
-    <circle cx="124" cy="112" r="7" fill="#22C55E"/>
-    <path d="M114 38 C98 50, 98 58, 114 70" stroke="#22C55E" stroke-width="6" stroke-linecap="round"/>
-    <path d="M114 98 C98 86, 98 78, 114 66" stroke="#22C55E" stroke-width="6" stroke-linecap="round"/>
-  </g>
+      <!-- route connectors (nodes + edges) -->
+      <circle cx="124" cy="28" r="7" fill="#22C55E"/>
+      <circle cx="124" cy="112" r="7" fill="#22C55E"/>
+      <path d="M114 38 C98 50, 98 58, 114 70" stroke="#22C55E" stroke-width="6" stroke-linecap="round"/>
+      <path d="M114 98 C98 86, 98 78, 114 66" stroke="#22C55E" stroke-width="6" stroke-linecap="round"/>
+    </g>
 
-  <!-- Wordmark -->
-  <g transform="translate(220,88)">
-    <text x="0" y="0"
-          font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-          font-size="64"
-          font-weight="700"
-          letter-spacing="-1"
-          fill="#0B1220">bot</text>
-    <text x="120" y="0"
-          font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-          font-size="64"
-          font-weight="800"
-          letter-spacing="-1"
-          fill="#22C55E">x</text>
-    <text x="0" y="44"
-          font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
-          font-size="18"
-          font-weight="500"
-          fill="#475569">Build bots like web apps.</text>
+    <!-- Wordmark -->
+    <g transform="translate(220,88)">
+      <text x="0" y="0"
+            font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="64"
+            font-weight="700"
+            letter-spacing="-1"
+            fill="#0B1220">bot</text>
+      <text x="120" y="0"
+            font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="64"
+            font-weight="800"
+            letter-spacing="-1"
+            fill="#22C55E">x</text>
+      <text x="0" y="44"
+            font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial"
+            font-size="18"
+            font-weight="500"
+            fill="#475569">Build bots like web apps.</text>
+    </g>
   </g>
 </svg>

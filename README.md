@@ -1,6 +1,10 @@
-![botx logo](assets/logo.svg)
+<p align="center">
+  <img src="assets/logo.svg" alt="botx logo" />
+</p>
 
-English | [中文](README.zh.md)
+<p align="center">
+  English | <a href="README.zh.md">中文</a>
+</p>
 
 # botx
 
