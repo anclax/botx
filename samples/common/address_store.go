@@ -6,7 +6,7 @@ import (
 	"strings"
 	"sync"
 
-	"github.com/cloudcarver/botx/pkg/core/bot"
+	"github.com/anclax/botx/pkg/core/bot"
 	"github.com/pkg/errors"
 )
 

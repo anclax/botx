@@ -8,10 +8,10 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/cloudcarver/botx/pkg/core/bot"
-	"github.com/cloudcarver/botx/pkg/core/session"
-	clifront "github.com/cloudcarver/botx/samples/cli/frontend"
-	"github.com/cloudcarver/botx/samples/common"
+	"github.com/anclax/botx/pkg/core/bot"
+	"github.com/anclax/botx/pkg/core/session"
+	clifront "github.com/anclax/botx/samples/cli/frontend"
+	"github.com/anclax/botx/samples/common"
 )
 
 func TestCLISampleFlow(t *testing.T) {

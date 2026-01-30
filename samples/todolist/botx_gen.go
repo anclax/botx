@@ -7,9 +7,9 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/cloudcarver/botx/pkg/core/bot"
-	"github.com/cloudcarver/botx/pkg/core/routepath"
-	"github.com/cloudcarver/botx/pkg/core/session"
+	"github.com/anclax/botx/pkg/core/bot"
+	"github.com/anclax/botx/pkg/core/routepath"
+	"github.com/anclax/botx/pkg/core/session"
 	"github.com/pkg/errors"
 )
 

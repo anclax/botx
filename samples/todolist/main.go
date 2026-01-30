@@ -8,8 +8,8 @@ import (
 	"strings"
 	"syscall"
 
-	"github.com/cloudcarver/botx/pkg/core/bot"
-	"github.com/cloudcarver/botx/pkg/core/session"
+	"github.com/anclax/botx/pkg/core/bot"
+	"github.com/anclax/botx/pkg/core/session"
 	"go.uber.org/zap"
 )
 

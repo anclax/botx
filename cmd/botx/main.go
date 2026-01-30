@@ -5,7 +5,7 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/cloudcarver/botx/pkg/codegen"
+	"github.com/anclax/botx/pkg/codegen"
 	"github.com/urfave/cli/v2"
 )
 

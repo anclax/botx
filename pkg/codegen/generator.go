@@ -410,9 +410,9 @@ func (g *generatorContext) renderImports(w *codeWriter) error {
 	w.line("\t\"net/url\"")
 	w.line("\t\"strings\"")
 	w.line("")
-	w.line("\t\"github.com/cloudcarver/botx/pkg/core/bot\"")
-	w.line("\t\"github.com/cloudcarver/botx/pkg/core/routepath\"")
-	w.line("\t\"github.com/cloudcarver/botx/pkg/core/session\"")
+	w.line("\t\"github.com/anclax/botx/pkg/core/bot\"")
+	w.line("\t\"github.com/anclax/botx/pkg/core/routepath\"")
+	w.line("\t\"github.com/anclax/botx/pkg/core/session\"")
 	w.line("\t\"github.com/pkg/errors\"")
 	w.line(")")
 	return nil
