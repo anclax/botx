@@ -12,6 +12,18 @@ Build bots like web apps: pages, routes, components—no FSM sprawl.
 Define behavior in `botx.yaml`, generate Go handlers, and focus on business logic.
 One YAML spec powers Telegram, CLI, and any backend that implements the connector.
 
+## Supported Platforms
+
+- [x] Telegram connector
+- [ ] Slack connector
+- [ ] WhatsApp connector
+- [ ] Botx TUI connector
+
+## Programming Languages
+
+- [x] Go
+- [ ] TypeScript
+
 ## Install
 
 macOS / Linux:

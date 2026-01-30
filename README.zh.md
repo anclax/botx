@@ -12,6 +12,18 @@
 在 `botx.yaml` 中定义行为，生成 Go 处理器，专注业务逻辑。
 一份 YAML 规范即可驱动 Telegram、CLI，以及任何实现 connector 的后端。
 
+## 支持的平台
+
+- [x] Telegram 连接器
+- [ ] Slack 连接器
+- [ ] WhatsApp 连接器
+- [ ] Botx TUI 连接器
+
+## 编程语言
+
+- [x] Go
+- [ ] TypeScript
+
 ## 安装
 
 macOS / Linux：
