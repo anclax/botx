@@ -9,7 +9,7 @@
 - `doc/design/zh.md` and `generator.md`: Design notes and generator details.
 
 ## Build, Test, and Development Commands
-- `go run ./cmd/botx gen -c ./samples/cli/botx.yaml -o ./samples/common/botx_gen.go`: Generate handlers from YAML.
+- `botx gen -c ./samples/cli/botx.yaml -o ./samples/common/botx_gen.go`: Generate handlers from YAML.
 - `go run ./samples/cli`: Run the CLI sample locally.
 - `BOTX_TELEGRAM_TOKEN=... go run ./samples/telegram`: Run the Telegram sample.
 - `go test ./samples/cli`: Run the end-to-end CLI test.

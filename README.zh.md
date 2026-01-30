@@ -48,7 +48,7 @@ iwr -useb https://raw.githubusercontent.com/cloudcarver/botx/main/dev/install.ps
 2) 生成 Go 代码：
 
 ```bash
-go run ./cmd/botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go
+botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go
 ```
 
 3) 在应用中注册生成的处理器：

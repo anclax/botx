@@ -5,7 +5,7 @@ Telegram todo list bot sample.
 ## Generate code
 
 ```bash
-go run ./cmd/botx gen -c ./samples/todolist/botx.yaml -o ./samples/todolist/botx_gen.go --package main
+botx gen -c ./samples/todolist/botx.yaml -o ./samples/todolist/botx_gen.go --package main
 ```
 
 ## Run

@@ -91,7 +91,7 @@ components:
 ## Generate handlers
 
 ```bash
-go run ./cmd/botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go --package main
+botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go --package main
 ```
 
 Do not edit generated code directly. Update YAML or supporting source files and regenerate.

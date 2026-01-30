@@ -48,7 +48,7 @@ Install a specific version by setting `BOTX_VERSION` (macOS/Linux) or `-Version`
 2) Generate Go code:
 
 ```bash
-go run ./cmd/botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go
+botx gen -c ./path/to/botx.yaml -o ./path/to/botx_gen.go
 ```
 
 3) Register the generated handler in your app:
